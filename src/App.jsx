@@ -1,0 +1,229 @@
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+
+function App() {
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  const meals = ["Breakfast", "Lunch", "Snaks", "Dinner"];
+  const dishesItems = [
+    {
+      name: "Kashke Bademjon",
+      image: "public/Kashke-Bademjan.png",
+      textContent: "Hauptgericht",
+      background: "linear-gradient(122deg, #6360e2 0%, #54fffd 100%)",
+    },
+    {
+      name: "Qeyme",
+      image: "/Geyme.png",
+      textContent: "Hauptgericht",
+      background: "linear-gradient(302deg, #2CCFDA 0%, #95AD61 100%)",
+    },
+    {
+      name: "Pizza",
+      image: "/Pizza.png",
+      textContent: "Hauptgericht",
+      background: "linear-gradient(302deg, #2CCFDA 0%, #95AD61 100%)",
+    },
+    {
+      name: "Shiryach",
+      image: "Shirjach 1.png",
+      textContent: "Snaks",
+      background: "linear-gradient(122deg, #7B7168 0%, #B4DBFF 100%)",
+    },
+    {
+      name: "Pasta",
+      image: "Pasta 1.png",
+      textContent: "Hauptgericht",
+      background: "linear-gradient(302deg, #2CCFDA 0%, #95AD61 100%)",
+    },
+    {
+      name: "Abghost",
+      image: "abgoosht 1.png",
+      textContent: "Hauptgericht",
+      background: "linear-gradient(122deg, #FF007D 0%, #FFA800 100%)",
+    },
+  ];
+
+  const dishesNumber = [
+    {
+      name: "Qorme sabsi",
+      image: "ghormeh-sabzi 1.png",
+      textContent: "Hauptgericht",
+      background:
+        "var(--Brown, linear-gradient(122deg, #797979 0%, #E3A973 100%))",
+    },
+    {
+      name: "Qaboli",
+      image: "Kabuli-Pulao 1.png",
+      textContent: "Hauptgericht",
+      background:
+        "var(--Violet, linear-gradient(122deg, #EF32D9 0%, #89FFFD 100%))",
+    },
+    {
+      name: "Manto",
+      image: "Manto 1.png",
+      textContent: "Hauptgericht",
+      background: "linear-gradient(122deg, #FF6B95 0%, #FFC796 100%)",
+    },
+    {
+      name: "Ashak",
+      image: "Ashak 1.png",
+      textContent: "Hauptgericht",
+      background: "var(--Colors-Green, #34C759)",
+    },
+    {
+      name: "Zereshk polo",
+      image: "Zereshk polo 1.png",
+      textContent: "Hauptgericht",
+      background:
+        "var(--Blau, linear-gradient(122deg, #6360E2 0%, #54FFFD 100%))",
+    },
+    {
+      name: "Bolani",
+      image: "Bolani 1.png",
+      textContent: "Hauptgericht",
+      background:
+        "var(--Black, linear-gradient(122deg, #7B7168 0%, #B4DBFF 100%))",
+    },
+  ];
+
+  return (
+    <div className="container">
+      <section className="left-side">
+        <div className="scrollable">
+          <div className="list">
+            {[
+              { key: "first-list", items: dishesItems },
+              { key: "second-list", items: dishesNumber },
+              { key: "third-list", items: dishesNumber },
+            ].map((list) => (
+              <ul key={list.key} className={list.key}>
+                {list.items.map((item) => (
+                  <li key={item.name}>
+                    <div
+                      className="card"
+                      style={{ background: item.background }}
+                    >
+                      <div className="play">
+                        <div className="main">{item.textContent}</div>
+                        <div className="name">{item.name}</div>
+                      </div>
+                      <div className="photo">
+                        <img src={item.image} alt={item.name} />
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+        <div className="input">
+          <div id="new-element"></div>
+          <input type="text" id="input" placeholder="Your text here" />
+          <button id="button">Click here</button>
+          <button className="reloadButton">lass dich überraschen</button>
+        </div>
+      </section>
+
+      {/* <section className="left-side">
+        <div className="scrollable">
+          <div className="list">
+            <ul className="first-list">
+              {dishesItems.map((item) => (
+                <li>
+                  <div
+                    key={item.name}
+                    className="card"
+                    style={{ background: item.background }}
+                  >
+                    <div className="play">
+                      <div className="main">{item.textContent}</div>
+                      <div className="name">{item.name}</div>
+                    </div>
+                    <div className="photo">
+                      <img src={item.image} alt={item.name} />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <ul className="second-list">
+              {dishesNumber.map((part) => (
+                <li>
+                  <div
+                    key={part.name}
+                    className="card"
+                    style={{ background: part.background }}
+                  >
+                    <div className="play">
+                      <div className="main">{part.textContent}</div>
+                      <div className="name">{part.name}</div>
+                    </div>
+                    <div className="photo">
+                      <img src={part.image} alt={part.name} />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <ul className="third-list">
+              {dishesNumber.map((part) => (
+                <li>
+                  <div
+                    key={part.name}
+                    className="card"
+                    style={{ background: part.background }}
+                  >
+                    <div className="play">
+                      <div className="main">{part.textContent}</div>
+                      <div className="name">{part.name}</div>
+                    </div>
+                    <div className="photo">
+                      <img src={part.image} alt={part.name} />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section> */}
+      <div className="table">
+        <table>
+          <thead>
+            <tr>
+              <th id="empty"></th>
+              {meals.map((meal) => (
+                <th key={meal} className="top">
+                  {meal}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {days.map((day) => (
+              <tr key={day}>
+                <th>{day}</th>
+                {meals.map((meal) => (
+                  <td key={`${day}-${meal}`}>Data</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default App;
