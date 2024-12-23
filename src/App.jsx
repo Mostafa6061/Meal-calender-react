@@ -96,16 +96,53 @@ function App() {
     },
   ];
 
+  const [value, setValue] = useState("");
+  const [columns, setColumns] = useState([
+    { key: "first-list", items: dishesItems },
+    { key: "second-list", items: dishesNumber },
+    { key: "third-list", items: dishesNumber },
+  ]);
+  function handleClick(e) {
+    // Take the value of "value" state property
+    // add a new item to columns using the setColumn function
+    const newItem = {
+      name: value,
+      background:
+        "var(--Black, linear-gradient(122deg, #7B7168 0%, #B4DBFF 100%))",
+      textContent: "Hauptgericht",
+      image: "Bolani 1.png",
+    }; // Add remaining properties
+    // setColumns([
+    //   ...columns,
+    //   { key: columns[0].key, items: [...columns[0].items, newItem] },
+    // ]);
+
+    setColumns(
+      columns.map((list) => {
+        if (list.key === "first-list") {
+          return {
+            key: list.key,
+            items: [...list.items, newItem],
+          };
+        } else {
+          return list;
+        }
+      })
+    );
+  }
+
+  console.log(columns);
+
+  function valueName(e) {
+    setValue(e.target.value);
+  }
+
   return (
     <div className="container">
       <section className="left-side">
         <div className="scrollable">
           <div className="list">
-            {[
-              { key: "first-list", items: dishesItems },
-              { key: "second-list", items: dishesNumber },
-              { key: "third-list", items: dishesNumber },
-            ].map((list) => (
+            {columns.map((list) => (
               <ul key={list.key} className={list.key}>
                 {list.items.map((item) => (
                   <li key={item.name}>
@@ -129,8 +166,16 @@ function App() {
         </div>
         <div className="input">
           <div id="new-element"></div>
-          <input type="text" id="input" placeholder="Your text here" />
-          <button id="button">Click here</button>
+          <input
+            type="text"
+            id="input"
+            placeholder="Your text here"
+            value={value}
+            onChange={valueName}
+          />
+          <button id="button" onClick={handleClick}>
+            Click here
+          </button>
           <button className="reloadButton">lass dich überraschen</button>
         </div>
       </section>
@@ -177,7 +222,7 @@ function App() {
               ))}
             </ul>
             <ul className="third-list">
-              {dishesNumber.map((part) => (
+              {dishesNumber.map((props) => (
                 <li>
                   <div
                     key={part.name}
