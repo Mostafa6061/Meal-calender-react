@@ -1,17 +1,6 @@
 import React from "react";
 
-function TableFunction() {
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  const meals = ["Breakfast", "Lunch", "Snaks", "Dinner"];
-
+function TableFunction({ days, meals }) {
   return (
     <table>
       <thead>

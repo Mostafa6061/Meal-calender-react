@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -128,6 +128,17 @@ function App() {
     setValue(e.target.value);
   }
 
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  const meals = ["Breakfast", "Lunch", "Snaks", "Dinner"];
+
   return (
     <div className="container">
       <section className="left-side">
@@ -171,7 +182,7 @@ function App() {
         </div>
       </section>
       <div className="table">
-        <TableFunction />
+        <TableFunction days={days} meals={meals} />
       </div>
     </div>
   );
