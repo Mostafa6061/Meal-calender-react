@@ -2,18 +2,9 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import TableFunction from "./table-function";
 
 function App() {
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  const meals = ["Breakfast", "Lunch", "Snaks", "Dinner"];
   const dishesItems = [
     {
       name: "Kashke Bademjon",
@@ -179,93 +170,8 @@ function App() {
           <button className="reloadButton">lass dich überraschen</button>
         </div>
       </section>
-
-      {/* <section className="left-side">
-        <div className="scrollable">
-          <div className="list">
-            <ul className="first-list">
-              {dishesItems.map((item) => (
-                <li>
-                  <div
-                    key={item.name}
-                    className="card"
-                    style={{ background: item.background }}
-                  >
-                    <div className="play">
-                      <div className="main">{item.textContent}</div>
-                      <div className="name">{item.name}</div>
-                    </div>
-                    <div className="photo">
-                      <img src={item.image} alt={item.name} />
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <ul className="second-list">
-              {dishesNumber.map((part) => (
-                <li>
-                  <div
-                    key={part.name}
-                    className="card"
-                    style={{ background: part.background }}
-                  >
-                    <div className="play">
-                      <div className="main">{part.textContent}</div>
-                      <div className="name">{part.name}</div>
-                    </div>
-                    <div className="photo">
-                      <img src={part.image} alt={part.name} />
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <ul className="third-list">
-              {dishesNumber.map((props) => (
-                <li>
-                  <div
-                    key={part.name}
-                    className="card"
-                    style={{ background: part.background }}
-                  >
-                    <div className="play">
-                      <div className="main">{part.textContent}</div>
-                      <div className="name">{part.name}</div>
-                    </div>
-                    <div className="photo">
-                      <img src={part.image} alt={part.name} />
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section> */}
       <div className="table">
-        <table>
-          <thead>
-            <tr>
-              <th id="empty"></th>
-              {meals.map((meal) => (
-                <th key={meal} className="top">
-                  {meal}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {days.map((day) => (
-              <tr key={day}>
-                <th>{day}</th>
-                {meals.map((meal) => (
-                  <td key={`${day}-${meal}`}>Data</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <TableFunction />
       </div>
     </div>
   );
