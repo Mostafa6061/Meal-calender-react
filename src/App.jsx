@@ -8,7 +8,7 @@ function App() {
   const dishesItems = [
     {
       name: "Kashke Bademjon",
-      image: "public/Kashke-Bademjan.png",
+      image: "/Kashke-Bademjan.png",
       textContent: "Hauptgericht",
       background: "linear-gradient(122deg, #6360e2 0%, #54fffd 100%)",
     },
@@ -124,9 +124,9 @@ function App() {
 
   console.log(columns);
 
-  function valueName(e) {
-    setValue(e.target.value);
-  }
+  // function valueName(e) {
+  //   setValue(e.target.value);
+  // }
 
   const days = [
     "Monday",
@@ -139,6 +139,23 @@ function App() {
   ];
   const meals = ["Breakfast", "Lunch", "Snaks", "Dinner"];
 
+  async function getData() {
+    const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      return json;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  getData();
+  const [cocktail, setCocktail] = useState([]);
   return (
     <div className="container">
       <section className="left-side">
@@ -164,6 +181,25 @@ function App() {
                 ))}
               </ul>
             ))}
+            <ul class="fourthList">
+              <li>
+                <div
+                  class="card"
+                  style={{
+                    background:
+                      "linear-gradient(122deg, #6360e2 0%, #54fffd 100%)",
+                  }}
+                >
+                  <div class="play">
+                    <div class="main">Hauptgericht</div>
+                    <div class="name">Kashke Bademjon</div>
+                  </div>
+                  <div class="photo">
+                    <img src="/Kashke-Bademjan.png" alt="Kashke Bademjon" />
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
         <div className="input">
@@ -173,12 +209,14 @@ function App() {
             id="input"
             placeholder="Your text here"
             value={value}
-            onChange={valueName}
+            onChange={(event) => setValue(event.target.value)}
           />
           <button id="button" onClick={handleClick}>
             Click here
           </button>
-          <button className="reloadButton">lass dich überraschen</button>
+          <button className="reloadButton" onClick={getData}>
+            lass dich überraschen
+          </button>
         </div>
       </section>
       <div className="table">
