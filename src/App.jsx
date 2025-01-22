@@ -87,33 +87,27 @@ function App() {
     },
   ];
 
+  const [cocktail, setCocktail] = useState();
   const [value, setValue] = useState("");
   const [columns, setColumns] = useState([
     { key: "first-list", items: dishesItems },
     { key: "second-list", items: dishesNumber },
-    { key: "third-list", items: dishesNumber },
+    { key: "third-list", items: dishesItems },
   ]);
-  function handleClick(e) {
-    // Take the value of "value" state property
-    // add a new item to columns using the setColumn function
+  function appendItemToThirdList({ name, image, textContent, background }) {
     const newItem = {
-      name: value,
-      background:
-        "var(--Black, linear-gradient(122deg, #7B7168 0%, #B4DBFF 100%))",
-      textContent: "Hauptgericht",
-      image: "Bolani 1.png",
-    }; // Add remaining properties
-    // setColumns([
-    //   ...columns,
-    //   { key: columns[0].key, items: [...columns[0].items, newItem] },
-    // ]);
+      name: name,
+      background: background,
+      textContent: textContent,
+      image: image,
+    };
 
     setColumns(
       columns.map((list) => {
-        if (list.key === "first-list") {
+        if (list.key === "third-list") {
           return {
             key: list.key,
-            items: [...list.items, newItem],
+            items: [newItem],
           };
         } else {
           return list;
@@ -122,11 +116,7 @@ function App() {
     );
   }
 
-  console.log(columns);
-
-  // function valueName(e) {
-  //   setValue(e.target.value);
-  // }
+  // console.log(columns);
 
   const days = [
     "Monday",
@@ -147,15 +137,37 @@ function App() {
         throw new Error(`Response status: ${response.status}`);
       }
 
-      const json = await response.json();
-      return json;
+      const cocktail = await response.json();
+
+      // setColumns(
+      //   columns.map((list) => {
+      //     if (list.key === "third-list") {
+      //       return {
+      //         key: list.key,
+      //         items: [{
+      //           name: cocktail.drinks[0].strDrink,
+      //           image: cocktail.drinks[0].strDrinkThumb,
+      //           background: dishesNumber[2].background,
+      //           textContent: "Cocktail",
+      //         }],
+      //       };
+      //     } else {
+      //       return list;
+      //     }
+      //   })
+      // );
+
+      appendItemToThirdList({
+        name: cocktail.drinks[0].strDrink,
+        image: cocktail.drinks[0].strDrinkThumb,
+        background: dishesNumber[2].background,
+        textContent: "Cocktail",
+      });
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  getData();
-  const [cocktail, setCocktail] = useState([]);
   return (
     <div className="container">
       <section className="left-side">
@@ -181,25 +193,21 @@ function App() {
                 ))}
               </ul>
             ))}
-            <ul class="fourthList">
-              <li>
-                <div
-                  class="card"
-                  style={{
-                    background:
-                      "linear-gradient(122deg, #6360e2 0%, #54fffd 100%)",
-                  }}
-                >
-                  <div class="play">
-                    <div class="main">Hauptgericht</div>
-                    <div class="name">Kashke Bademjon</div>
+
+            {/* <ul className="third-list">
+              {cocktail.map((cocktail, index) => (
+                <li key={index}>
+                  <div
+                    className="card"
+                    style={{ background: cocktail.background }}
+                  >
+                    <h3>{cocktail.name}</h3>
+                    <img src={cocktail.image} alt={cocktail.name} />
+                    <p>{cocktail.textContent}</p>
                   </div>
-                  <div class="photo">
-                    <img src="/Kashke-Bademjan.png" alt="Kashke Bademjon" />
-                  </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              ))}
+            </ul> */}
           </div>
         </div>
         <div className="input">
@@ -211,7 +219,31 @@ function App() {
             value={value}
             onChange={(event) => setValue(event.target.value)}
           />
-          <button id="button" onClick={handleClick}>
+          <button
+            id="button"
+            onClick={() => {
+              const newItem = {
+                name: value,
+                background:
+                  "var(--Black, linear-gradient(122deg, #7B7168 0%, #B4DBFF 100%))",
+                textContent: "Hauptgericht",
+                image: "Bolani 1.png",
+              };
+
+              setColumns(
+                columns.map((list) => {
+                  if (list.key === "first-list") {
+                    return {
+                      key: list.key,
+                      items: [...list.items, newItem],
+                    };
+                  } else {
+                    return list;
+                  }
+                })
+              );
+            }}
+          >
             Click here
           </button>
           <button className="reloadButton" onClick={getData}>
