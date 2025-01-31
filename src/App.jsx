@@ -3,6 +3,10 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import TableFunction from "./table-function";
+// import { DndContext } from "@dnd-kit/core";
+
+// import { Droppable } from "./Droppable";
+// import { Draggable } from "./Draggable";
 
 function App() {
   const dishesItems = [
@@ -218,6 +222,31 @@ function App() {
     fetchCocktails();
   }, []);
 
+  async function fetchCocktails() {
+    const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+    try {
+      const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
+      const fetchedCocktails = [];
+      for (const item of cocktailItems) {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        const newCocktail = {
+          name: json.drinks[0].strDrink,
+          image: json.drinks[0].strDrinkThumb,
+          background: generateRandomBackground(), // Example background
+          textContent: "Cocktail",
+        };
+        fetchedCocktails.push(newCocktail);
+      }
+      setCocktail(fetchedCocktails);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   return (
     <div className="container">
       <section className="left-side">
@@ -278,7 +307,9 @@ function App() {
           <button id="button" onClick={handleClick}>
             Click here
           </button>
-          <button className="reloadButton">lass dich überraschen</button>
+          <button className="reloadButton" onClick={fetchCocktails}>
+            lass dich überraschen
+          </button>
         </div>
       </section>
       <div className="table">
