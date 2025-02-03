@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import TableFunction from "./table-function";
+import CocktailFunction from "./cocktail-function";
 // import { DndContext } from "@dnd-kit/core";
 
 // import { Droppable } from "./Droppable";
@@ -193,59 +194,59 @@ function App() {
     return `linear-gradient(122deg, ${colors[randomIndex1]} 0%, ${colors[randomIndex2]} 100%)`;
   };
 
-  useEffect(() => {
-    async function fetchCocktails() {
-      const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-      try {
-        const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
-        const fetchedCocktails = [];
-        for (const item of cocktailItems) {
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-          }
-          const json = await response.json();
-          const newCocktail = {
-            name: json.drinks[0].strDrink,
-            image: json.drinks[0].strDrinkThumb,
-            background: generateRandomBackground(), // Example background
-            textContent: "Cocktail",
-          };
-          fetchedCocktails.push(newCocktail);
-        }
-        setCocktail(fetchedCocktails);
-      } catch (error) {
-        console.error(error.message);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchCocktails() {
+  //     const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+  //     try {
+  //       const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
+  //       const fetchedCocktails = [];
+  //       for (const item of cocktailItems) {
+  //         const response = await fetch(url);
+  //         if (!response.ok) {
+  //           throw new Error(`Response status: ${response.status}`);
+  //         }
+  //         const json = await response.json();
+  //         const newCocktail = {
+  //           name: json.drinks[0].strDrink,
+  //           image: json.drinks[0].strDrinkThumb,
+  //           background: generateRandomBackground(), // Example background
+  //           textContent: "Cocktail",
+  //         };
+  //         fetchedCocktails.push(newCocktail);
+  //       }
+  //       setCocktail(fetchedCocktails);
+  //     } catch (error) {
+  //       console.error(error.message);
+  //     }
+  //   }
 
-    fetchCocktails();
-  }, []);
+  //   fetchCocktails();
+  // }, []);
 
-  async function fetchCocktails() {
-    const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-    try {
-      const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
-      const fetchedCocktails = [];
-      for (const item of cocktailItems) {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-        const json = await response.json();
-        const newCocktail = {
-          name: json.drinks[0].strDrink,
-          image: json.drinks[0].strDrinkThumb,
-          background: generateRandomBackground(), // Example background
-          textContent: "Cocktail",
-        };
-        fetchedCocktails.push(newCocktail);
-      }
-      setCocktail(fetchedCocktails);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
+  // async function fetchCocktails() {
+  //   const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+  //   try {
+  //     const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
+  //     const fetchedCocktails = [];
+  //     for (const item of cocktailItems) {
+  //       const response = await fetch(url);
+  //       if (!response.ok) {
+  //         throw new Error(`Response status: ${response.status}`);
+  //       }
+  //       const json = await response.json();
+  //       const newCocktail = {
+  //         name: json.drinks[0].strDrink,
+  //         image: json.drinks[0].strDrinkThumb,
+  //         background: generateRandomBackground(), // Example background
+  //         textContent: "Cocktail",
+  //       };
+  //       fetchedCocktails.push(newCocktail);
+  //     }
+  //     setCocktail(fetchedCocktails);
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // }
 
   return (
     <div className="container">
@@ -272,7 +273,7 @@ function App() {
                 ))}
               </ul>
             ))}
-            <ul className="third-list">
+            {/* <ul className="third-list">
               {cocktail.map((cocktails) => (
                 <li key={Math.random()}>
                   <div
@@ -286,13 +287,10 @@ function App() {
                     <div className="photo">
                       <img src={cocktails.image} alt={cocktails.name} />
                     </div>
-                    {/* <h3>{cocktails.name}</h3>
-                    <img src={cocktails.image} alt={cocktails.name} />
-                    <p>{cocktails.textContent}</p> */}
                   </div>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
         <div className="input">
@@ -307,9 +305,10 @@ function App() {
           <button id="button" onClick={handleClick}>
             Click here
           </button>
-          <button className="reloadButton" onClick={fetchCocktails}>
+          <CocktailFunction />
+          {/* <button className="reloadButton" onClick={fetchCocktails}>
             lass dich überraschen
-          </button>
+          </button> */}
         </div>
       </section>
       <div className="table">
