@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 const generateRandomBackground = () => {
   const colors = [
     "#6360e2",

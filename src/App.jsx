@@ -4,10 +4,10 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import TableFunction from "./table-function";
 import CocktailFunction from "./cocktail-function";
-// import { DndContext } from "@dnd-kit/core";
 
-// import { Droppable } from "./Droppable";
-// import { Draggable } from "./Draggable";
+import { DndContext } from "@dnd-kit/core";
+
+import { Draggable } from "./Draggable";
 
 function App() {
   const dishesItems = [
@@ -108,7 +108,6 @@ function App() {
   const [columns, setColumns] = useState([
     { key: "first-list", items: dishesItems },
     { key: "second-list", items: dishesNumber },
-    // { key: "third-list", items: dishesItems },
   ]);
   function handleClick() {
     const newItem = {
@@ -131,50 +130,7 @@ function App() {
       })
     );
   }
-  // function appendItemToThirdList({ name, image, textContent, background }) {
-  //   const newItem = {
-  //     name: name,
-  //     background: background,
-  //     textContent: textContent,
-  //     image: image,
-  //   };
 
-  //   setColumns(
-  //     columns.map((list) => {
-  //       if (list.key === "third-list") {
-  //         return {
-  //           key: list.key,
-  //           items: [newItem],
-  //         };
-  //       } else {
-  //         return list;
-  //       }
-  //     })
-  //   );
-  // }
-
-  // // console.log(columns);
-
-  // async function getData() {
-  //   const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-  //   try {
-  //     const response = await fetch(url);
-  //     if (!response.ok) {
-  //       throw new Error(`Response status: ${response.status}`);
-  //     }
-
-  //     const cocktail = await response.json();
-
-  //     appendItemToThirdList({
-  //       name: cocktail.drinks[0].strDrink,
-  //       image: cocktail.drinks[0].strDrinkThumb,
-  //       background: dishesNumber[2].background,
-  //       textContent: "Cocktail",
-  //     });
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // }
   const generateRandomBackground = () => {
     const colors = [
       "#6360e2",
@@ -194,127 +150,58 @@ function App() {
     return `linear-gradient(122deg, ${colors[randomIndex1]} 0%, ${colors[randomIndex2]} 100%)`;
   };
 
-  // useEffect(() => {
-  //   async function fetchCocktails() {
-  //     const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-  //     try {
-  //       const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
-  //       const fetchedCocktails = [];
-  //       for (const item of cocktailItems) {
-  //         const response = await fetch(url);
-  //         if (!response.ok) {
-  //           throw new Error(`Response status: ${response.status}`);
-  //         }
-  //         const json = await response.json();
-  //         const newCocktail = {
-  //           name: json.drinks[0].strDrink,
-  //           image: json.drinks[0].strDrinkThumb,
-  //           background: generateRandomBackground(), // Example background
-  //           textContent: "Cocktail",
-  //         };
-  //         fetchedCocktails.push(newCocktail);
-  //       }
-  //       setCocktail(fetchedCocktails);
-  //     } catch (error) {
-  //       console.error(error.message);
-  //     }
-  //   }
-
-  //   fetchCocktails();
-  // }, []);
-
-  // async function fetchCocktails() {
-  //   const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-  //   try {
-  //     const cocktailItems = Array.from({ length: 6 }); // Placeholder for six cocktails
-  //     const fetchedCocktails = [];
-  //     for (const item of cocktailItems) {
-  //       const response = await fetch(url);
-  //       if (!response.ok) {
-  //         throw new Error(`Response status: ${response.status}`);
-  //       }
-  //       const json = await response.json();
-  //       const newCocktail = {
-  //         name: json.drinks[0].strDrink,
-  //         image: json.drinks[0].strDrinkThumb,
-  //         background: generateRandomBackground(), // Example background
-  //         textContent: "Cocktail",
-  //       };
-  //       fetchedCocktails.push(newCocktail);
-  //     }
-  //     setCocktail(fetchedCocktails);
-  //   } catch (error) {
-  //     console.error(error.message);
-  //   }
-  // }
-
   return (
-    <div className="container">
-      <section className="left-side">
-        <div className="scrollable">
-          <div className="list">
-            {columns.map((list) => (
-              <ul key={list.key} className={list.key}>
-                {list.items.map((item) => (
-                  <li key={item.name}>
-                    <div
-                      className="card"
-                      style={{ background: generateRandomBackground() }}
-                    >
-                      <div className="play">
-                        <div className="main">{item.textContent}</div>
-                        <div className="name">{item.name}</div>
-                      </div>
-                      <div className="photo">
-                        <img src={item.image} alt={item.name} />
-                      </div>
-                    </div>
-                  </li>
+    <DndContext>
+      <div className="container">
+        <section className="left-side">
+          <div className="new-list">
+            <div className="scrollable">
+              <div className="list">
+                {columns.map((list) => (
+                  <ul key={list.key} className={list.key}>
+                    {list.items.map((item) => (
+                      <Draggable
+                        key={item.name}
+                        background={item.background}
+                        textContent={item.textContent}
+                        image={item.image}
+                        name={item.name}
+                      />
+                    ))}
+                  </ul>
                 ))}
-              </ul>
-            ))}
-            {/* <ul className="third-list">
-              {cocktail.map((cocktails) => (
-                <li key={Math.random()}>
-                  <div
-                    className="card"
-                    style={{ background: cocktails.background }}
-                  >
-                    <div className="play">
-                      <div className="main">{cocktails.textContent}</div>
-                      <div className="name">{cocktails.name}</div>
-                    </div>
-                    <div className="photo">
-                      <img src={cocktails.image} alt={cocktails.name} />
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul> */}
+
+                <div className="button-position">
+                  <CocktailFunction />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="input">
-          <div id="new-element"></div>
-          <input
-            type="text"
-            id="input"
-            placeholder="Your text here"
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
-          />
-          <button id="button" onClick={handleClick}>
-            Click here
-          </button>
-          <CocktailFunction />
-          {/* <button className="reloadButton" onClick={fetchCocktails}>
+
+          <div className="input">
+            <div id="new-element"></div>
+            <input
+              type="text"
+              id="input"
+              placeholder="Your text here"
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
+            />
+            <button id="button" onClick={handleClick}>
+              Click here
+            </button>
+
+            {/* <button className="reloadButton" onClick={fetchCocktails}>
             lass dich überraschen
           </button> */}
+          </div>
+        </section>
+
+        <div className="table">
+          <TableFunction days={days} meals={meals} />
         </div>
-      </section>
-      <div className="table">
-        <TableFunction days={days} meals={meals} />
       </div>
-    </div>
+    </DndContext>
   );
 }
 

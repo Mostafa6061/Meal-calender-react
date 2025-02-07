@@ -89,10 +89,12 @@ li {
   width: 72px;
   height: 64px;
 }
-
 .input {
   margin-top: 30px;
   display: flex;
   justify-content: space-around;
   text-align: center;
+}
+reloadButton {
+  overflow-y: hidden;
 }
