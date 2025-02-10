@@ -1,6 +1,7 @@
 import React from "react";
+import { Droppable } from "./Droppable";
 
-function TableFunction({ days, meals }) {
+function TableFunction({ days, meals, drop }) {
   return (
     <table>
       <thead>
@@ -17,9 +18,10 @@ function TableFunction({ days, meals }) {
         {days.map((day) => (
           <tr key={day}>
             <th>{day}</th>
-            {meals.map((meal) => (
-              <td key={`${day}-${meal}`}>Data</td>
-            ))}
+            {meals.map((meal) => {
+              const cellId = `${day}-${meal}`;
+              return <Droppable key={cellId} id={cellId} drop={drop} />;
+            })}
           </tr>
         ))}
       </tbody>

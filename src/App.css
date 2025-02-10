@@ -32,10 +32,10 @@ th {
   background-color: white;
   border: 0;
 }
-.scrollable {
+/* .scrollable {
   overflow-y: scroll;
   height: 300px;
-}
+} */
 .list {
   display: flex;
   justify-content: space-around;

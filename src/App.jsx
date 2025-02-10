@@ -4,9 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import TableFunction from "./table-function";
 import CocktailFunction from "./cocktail-function";
-
 import { DndContext } from "@dnd-kit/core";
-
 import { Draggable } from "./Draggable";
 
 function App() {
@@ -150,30 +148,44 @@ function App() {
     return `linear-gradient(122deg, ${colors[randomIndex1]} 0%, ${colors[randomIndex2]} 100%)`;
   };
 
+  const [drop, setDrop] = useState(null);
+
+  const handleDragEnd = (event) => {
+    setDrop({
+      name: event.active.id,
+      cell: event.over?.id,
+    });
+  };
+
   return (
-    <DndContext>
+    <DndContext onDragEnd={handleDragEnd}>
       <div className="container">
         <section className="left-side">
-          <div className="new-list">
-            <div className="scrollable">
-              <div className="list">
-                {columns.map((list) => (
-                  <ul key={list.key} className={list.key}>
-                    {list.items.map((item) => (
-                      <Draggable
-                        key={item.name}
-                        background={item.background}
-                        textContent={item.textContent}
-                        image={item.image}
-                        name={item.name}
-                      />
-                    ))}
-                  </ul>
-                ))}
+          <div className="scrollable">
+            <div className="list">
+              {columns.map((list) => (
+                <ul key={list.key} className={list.key}>
+                  {list.items.map((item) => (
+                    <Draggable key={item.name} name={item.name}>
+                      <div
+                        className="card"
+                        style={{ background: item.background }}
+                      >
+                        <div className="play">
+                          <div className="main">{item.textContent}</div>
+                          <div className="name">{item.name}</div>
+                        </div>
+                        <div className="photo">
+                          <img src={item.image} alt={item.name} />
+                        </div>
+                      </div>
+                    </Draggable>
+                  ))}
+                </ul>
+              ))}
 
-                <div className="button-position">
-                  <CocktailFunction />
-                </div>
+              <div className="button-position">
+                <CocktailFunction />
               </div>
             </div>
           </div>
@@ -190,15 +202,11 @@ function App() {
             <button id="button" onClick={handleClick}>
               Click here
             </button>
-
-            {/* <button className="reloadButton" onClick={fetchCocktails}>
-            lass dich überraschen
-          </button> */}
           </div>
         </section>
 
         <div className="table">
-          <TableFunction days={days} meals={meals} />
+          <TableFunction days={days} meals={meals} drop={drop} />
         </div>
       </div>
     </DndContext>

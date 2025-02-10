@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Draggable from "./Draggable";
 
 const generateRandomBackground = () => {
   const colors = [
@@ -73,7 +74,7 @@ const CocktailFunction = () => {
     <>
       <ul className="third-list">
         {cocktail.map((cocktails) => (
-          <li key={Math.random()}>
+          <Draggable key={cocktails.name} name={cocktails.name}>
             <div className="card" style={{ background: cocktails.background }}>
               <div className="play">
                 <div className="main">{cocktails.textContent}</div>
@@ -83,7 +84,7 @@ const CocktailFunction = () => {
                 <img src={cocktails.image} alt={cocktails.name} />
               </div>
             </div>
-          </li>
+          </Draggable>
         ))}
       </ul>
 
